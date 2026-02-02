@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Colorful To-Do List App</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+    background-size: 300% 300%;
+    animation: bgMove 10s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+.todo-app {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    width: 400px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    animation: popUp 0.8s ease;
+}
+
+@keyframes popUp {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.todo-app h2 {
+    text-align: center;
+    background: linear-gradient(to right, #ff512f, #dd2476);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+
+.input-box {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ff512f;
+}
+
+button.add-btn {
+    background: linear-gradient(135deg, #43cea2, #185a9d);
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button.add-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 25px;
+}
+
+
+li {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+li span {
+    font-weight: 500;
+    color: #333;
+}
+
+
+.delete-btn {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.delete-btn:hover {
+    transform: rotate(180deg) scale(1.2);
+}
+</style>
+</head>
+
+<body>
+
+
+<div class="todo-app">
+    <h2> To-Do List</h2>
+
+    <div class="input-box">
+        <input type="text" id="taskInput" placeholder="Enter your task">
+        <button class="add-btn" onclick="addTask()">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+function addTask() {
+    const taskInput = document.getElementById("taskInput");
+    const taskText = taskInput.value.trim();
+
+    if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+    }
+
+    const li = document.createElement("li");
+    li.innerHTML = `
+        <span>${taskText}</span>
+        <button class="delete-btn" onclick="deleteTask(this)">✖</button>
+    `;
+
+    document.getElementById("taskList").appendChild(li);
+    taskInput.value = "";
+}
+
+function deleteTask(btn) {
+    const task = btn.parentElement;
+    task.style.transform = "scale(0)";
+    task.style.opacity = "0";
+
+    setTimeout(() => {
+        task.remove();
+    }, 300);
+}
+</script>
+
+</body>
+</html>
